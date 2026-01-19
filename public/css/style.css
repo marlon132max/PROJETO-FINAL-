@@ -1,168 +1,195 @@
-/* ===== RESET ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* ===== VARIÁVEIS ===== */
 :root {
-  --azul-escuro: #0a4f70;
-  --azul-claro: #e6f2f8;
-  --branco: #ffffff;
-}
-
-/* ===== BODY ===== */
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--azul-claro);
-}
-
-/* ===== CONTAINER ===== */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* ===== HEADER ===== */
-.header {
-  background-color: var(--azul-escuro);
-  color: var(--branco);
-}
-
-.header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-}
-
-.logo {
-  font-size: 26px;
-  font-weight: bold;
-}
-
-/* ===== MENU ===== */
-.menu a {
-  color: var(--branco);
-  margin-left: 20px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.menu a:hover {
-  text-decoration: underline;
-}
-
-/* ===== MAIN ===== */
-.main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-/* ===== HERO ===== */
-.hero {
-  max-width: 600px;
-}
-
-.hero h2 {
-  color: var(--azul-escuro);
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 16px;
-  color: #333;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  background-color: var(--azul-escuro);
-  color: var(--branco);
-  text-align: center;
-  padding: 15px 0;
-  font-size: 14px;
-}
-
-/* ===== RESPONSIVIDADE ===== */
-@media (max-width: 768px) {
-  .header .container {
-    flex-direction: column;
+    --cor-primaria: #6b4f3f;   /* marrom histórico */
+    --cor-secundaria: #2f5d50; /* verde estrada */
+    --cor-clara: #f5f2ee;      /* bege claro */
+    --cor-escura: #1f1f1f;
   }
-
-  .menu {
-    margin-top: 10px;
+  
+  /* RESET */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-
+  
+  /* BODY */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cor-clara);
+    color: var(--cor-escura);
+  }
+  
+  /* HEADER */
+  .header {
+    background-color: #ffffff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--cor-primaria);
+  }
+  
   .menu a {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--cor-escura);
+    font-weight: 500;
   }
+  
+  .menu a:hover {
+    color: var(--cor-secundaria);
+  }
+  
+  /* HERO */
+  .hero {
+    height: 90vh;
+    background: linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+      ),
+      url("img/estrada-real.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    color: #ffffff;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+  }
+  
+  .hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+  
+  /* BOTÕES */
+  .hero-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .btn {
+    padding: 12px 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 4px;
+  }
+  
+  .btn-primary {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #244a40;
+  }
+  
+  .btn-secondary {
+    border: 2px solid #ffffff;
+    color: #ffffff;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #ffffff;
+    color: var(--cor-escura);
+  }
+  
+  /* SEÇÕES */
+  .section {
+    padding: 60px 40px;
+  }
+  
+  .section h3 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--cor-primaria);
+  }
+  
+  /* CAMINHOS */
+  .caminhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .card h4 {
+    color: var(--cor-secundaria);
+    margin-bottom: 10px;
+  }
+  
+  /* FOOTER */
+  .footer {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+  }
+  
+
+  /* CSS BASICO DO RESTO */
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
 }
 
-/* ===== LOGIN ===== */
-.caixa {
-  background-color: rgba(255, 255, 255, 0.95);
-  width: 320px;
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+header {
+    margin-bottom: 40px;
 }
 
-.caixa h2 {
-  margin-bottom: 20px;
-  color: var(--azul-escuro);
+.container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }
 
-.caixa input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.btn, button {
+    padding: 10px 20px;
+    background: #8b5e3c;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
 }
 
-.caixa input:focus {
-  outline: none;
-  border-color: var(--azul-escuro);
+input, select {
+    display: block;
+    margin: 10px auto;
+    padding: 8px;
+    width: 250px;
 }
 
-.caixa button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--azul-escuro);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+.lista {
+    list-style: none;
+    padding: 0;
 }
 
-.caixa button:hover {
-  background-color: #0f6e99;
-}
-
-.link-login {
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.link-login a {
-  color: var(--azul-escuro);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.link-login a:hover {
-  text-decoration: underline;
+.lista li {
+    margin: 10px 0;
 }

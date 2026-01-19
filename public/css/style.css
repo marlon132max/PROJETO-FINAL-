@@ -1,4 +1,4 @@
-/* Reset básico */
+/* ===== RESET ===== */
 * {
   margin: 0;
   padding: 0;
@@ -6,23 +6,109 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Estrutura da página: header, conteúdo e footer */
+/* ===== VARIÁVEIS ===== */
+:root {
+  --azul-escuro: #0a4f70;
+  --azul-claro: #e6f2f8;
+  --branco: #ffffff;
+}
+
+/* ===== BODY ===== */
 body {
   min-height: 100vh;
   display: flex;
-  flex-direction: column; /* organiza header, main e footer em coluna */
-  background-color: #e6f2f8;
+  flex-direction: column;
+  background-color: var(--azul-claro);
 }
 
-/* Centraliza o conteúdo principal (login) */
-main {
-  flex: 1; /* ocupa o espaço disponível entre header e footer */
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* ===== MENU ===== */
+.menu a {
+  color: var(--branco);
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+/* ===== MAIN ===== */
+.main {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
-/* Caixa do login */
+/* ===== HERO ===== */
+.hero {
+  max-width: 600px;
+}
+
+.hero h2 {
+  color: var(--azul-escuro);
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .header .container {
+    flex-direction: column;
+  }
+
+  .menu {
+    margin-top: 10px;
+  }
+
+  .menu a {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+/* ===== LOGIN ===== */
 .caixa {
   background-color: rgba(255, 255, 255, 0.95);
   width: 320px;
@@ -32,78 +118,51 @@ main {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Título */
 .caixa h2 {
   margin-bottom: 20px;
-  color: #0a4f70;
-  letter-spacing: 1px;
+  color: var(--azul-escuro);
 }
 
-/* Inputs */
 .caixa input {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 14px;
 }
 
-/* Efeito ao clicar no input */
 .caixa input:focus {
   outline: none;
-  border-color: #0a4f70;
+  border-color: var(--azul-escuro);
 }
 
-/* Botão */
 .caixa button {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background-color: #0a4f70;
+  background-color: var(--azul-escuro);
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-/* Hover do botão */
 .caixa button:hover {
   background-color: #0f6e99;
 }
 
-/* Mensagem */
-#mensagem {
-  margin-top: 10px;
-  font-size: 14px;
-  color: red;
-}
-
-/* Texto do link */
 .link-login {
-  margin-bottom: 10px; /* fica acima do botão */
+  margin-bottom: 10px;
   font-size: 14px;
 }
 
-/* Link */
 .link-login a {
-  color: #0a4f70;
+  color: var(--azul-escuro);
   text-decoration: none;
   font-weight: bold;
 }
 
 .link-login a:hover {
   text-decoration: underline;
-}
-
-/* ===== RODAPÉ ===== */
-footer {
-  width: 100%;
-  background-color: #0a4f70;
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 14px;
 }

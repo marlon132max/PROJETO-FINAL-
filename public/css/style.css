@@ -1,0 +1,109 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Estrutura da página: header, conteúdo e footer */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* organiza header, main e footer em coluna */
+  background-color: #e6f2f8;
+}
+
+/* Centraliza o conteúdo principal (login) */
+main {
+  flex: 1; /* ocupa o espaço disponível entre header e footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caixa do login */
+.caixa {
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 320px;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Título */
+.caixa h2 {
+  margin-bottom: 20px;
+  color: #0a4f70;
+  letter-spacing: 1px;
+}
+
+/* Inputs */
+.caixa input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Efeito ao clicar no input */
+.caixa input:focus {
+  outline: none;
+  border-color: #0a4f70;
+}
+
+/* Botão */
+.caixa button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0a4f70;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Hover do botão */
+.caixa button:hover {
+  background-color: #0f6e99;
+}
+
+/* Mensagem */
+#mensagem {
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
+}
+
+/* Texto do link */
+.link-login {
+  margin-bottom: 10px; /* fica acima do botão */
+  font-size: 14px;
+}
+
+/* Link */
+.link-login a {
+  color: #0a4f70;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-login a:hover {
+  text-decoration: underline;
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+  width: 100%;
+  background-color: #0a4f70;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+}

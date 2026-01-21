@@ -1,5 +1,30 @@
 // js/script.js
+document.addEventListener("DOMContentLoaded", () => {
+  atualizarMenu();
 
+  const page = document.body.id;
+
+  switch (page) {
+    case "page-index":
+      initIndex();
+      break;
+    case "page-login":
+      initLogin();
+      break;
+    case "page-cadastro":
+      initCadastro();
+      break;
+    case "page-cidade":
+      initCidade();
+      break;
+    case "page-roteiro":
+      initRoteiro();
+      break;
+    case "page-perfil":
+      initPerfil();
+      break;
+  }
+});
 document.addEventListener("DOMContentLoaded", () => {
 
   // Identifica a página atual
@@ -123,11 +148,7 @@ function initCidade() {
 ====================== */
 
 function initRoteiro() {
-  if (!usuarioLogado()) {
-    alert("Acesso restrito. Faça login.");
-    window.location.href = "login.html";
-    return;
-  }
+  if (!protegerPagina()) return;
 
   console.log("Página de roteiro carregada");
 }
@@ -137,27 +158,58 @@ function initRoteiro() {
 ====================== */
 
 function initPerfil() {
-
-  // Protege a página
-  if (!usuarioLogado()) {
-    alert("Você precisa estar logado para acessar o perfil.");
-    window.location.href = "login.html";
-    return;
-  }
+  if (!protegerPagina()) return;
 
   const nomeUsuario = document.getElementById("nome-usuario");
   const btnLogout = document.getElementById("btn-logout");
 
-  // Recupera dados simulados
   const email = localStorage.getItem("emailUsuario");
 
-  // Exibe informações
-  nomeUsuario.textContent = email 
-    ? `Usuário: ${email}` 
+  nomeUsuario.textContent = email
+    ? `Usuário: ${email}`
     : "Usuário autenticado";
 
-  // Logout
-  btnLogout.addEventListener("click", () => {
-    logout();
-  });
+  btnLogout.addEventListener("click", logout);
+}
+
+/* ======================
+   ATUALIZA MENU
+====================== */
+
+function atualizarMenu() {
+  const menu = document.querySelector(".menu");
+  if (!menu) return;
+
+  if (usuarioLogado()) {
+    menu.innerHTML = `
+      <a href="index.html">Início</a>
+      <a href="cidade.html">Cidades</a>
+      <a href="roteiro.html">Roteiro</a>
+      <a href="perfil.html">Perfil</a>
+      <a href="#" id="logout">Sair</a>
+    `;
+
+    document
+      .getElementById("logout")
+      .addEventListener("click", logout);
+
+  } else {
+    menu.innerHTML = `
+      <a href="index.html">Início</a>
+      <a href="login.html">Login</a>
+    `;
+  }
+}
+
+/* ======================
+   PROTEGER PAGINA
+====================== */
+
+function protegerPagina() {
+  if (!usuarioLogado()) {
+    alert("Você precisa estar logado para acessar esta página.");
+    window.location.href = "login.html";
+    return false;
+  }
+  return true;
 }

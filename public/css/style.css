@@ -104,8 +104,8 @@
   }
   
   .btn-secondary:hover {
-    background-color: #ffffff;
-    color: var(--cor-escura);
+    background-color: #244a40;
+    
   }
   
   /* SEÇÕES */
@@ -176,6 +176,7 @@ header {
     text-decoration: none;
     border: none;
     cursor: pointer;
+    
 }
 
 input, select {
@@ -192,4 +193,30 @@ input, select {
 
 .lista li {
     margin: 10px 0;
+}
+
+
+/*  PERFIL */
+.btn-perfil {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: #f3f3f3; /* Cor azulada do fundo da sua imagem */
+  border-radius: 8px;        /* Bordas levemente arredondadas */
+  color: white;              /* Cor do ícone */
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+/* Efeito de brilho ao passar o mouse */
+.btn-perfil:hover {
+  background-color: #ffffff;
+}
+
+/* Tamanho do ícone dentro do botão */
+.btn-perfil svg {
+  width: 28px;
+  height: 28px;
 }

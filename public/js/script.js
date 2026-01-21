@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     case "page-roteiro":
       initRoteiro();
       break;
+
+    case "page-perfil":
+      initPerfil();
+      break;
   }
 });
 
@@ -126,4 +130,34 @@ function initRoteiro() {
   }
 
   console.log("Página de roteiro carregada");
+}
+
+/* ======================
+   PERFIL.HTML
+====================== */
+
+function initPerfil() {
+
+  // Protege a página
+  if (!usuarioLogado()) {
+    alert("Você precisa estar logado para acessar o perfil.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const nomeUsuario = document.getElementById("nome-usuario");
+  const btnLogout = document.getElementById("btn-logout");
+
+  // Recupera dados simulados
+  const email = localStorage.getItem("emailUsuario");
+
+  // Exibe informações
+  nomeUsuario.textContent = email 
+    ? `Usuário: ${email}` 
+    : "Usuário autenticado";
+
+  // Logout
+  btnLogout.addEventListener("click", () => {
+    logout();
+  });
 }

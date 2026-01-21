@@ -124,12 +124,37 @@ function initLogin() {
    CADASTRO.HTML
 ====================== */
 
-function initCadastro() {
-  const form = document.querySelector("form");
 
-  form?.addEventListener("submit", (e) => {
+function initCadastro() {
+  const form = document.getElementById("cadastro-form");
+  if (!form) return;
+
+  const nomeInput = document.getElementById("nome");
+  const emailInput = document.getElementById("email");
+  const senhaInput = document.getElementById("senha");
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    alert("Cadastro realizado com sucesso!");
+
+    const nome = nomeInput.value.trim();
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value.trim();
+
+    if (!nome || !email || !senha) {
+      alert("Preencha todos os campos.");
+      return;
+    }
+
+    // Simula cadastro
+    const usuario = {
+      nome,
+      email,
+      senha // ⚠️ apenas simulação (não fazer isso em produção)
+    };
+
+    localStorage.setItem("usuarioCadastrado", JSON.stringify(usuario));
+
+    alert("Cadastro realizado com sucesso! Faça login.");
     window.location.href = "login.html";
   });
 }
@@ -139,8 +164,27 @@ function initCadastro() {
 ====================== */
 
 function initCidade() {
-  console.log("Página de cidades carregada");
-  // Aqui depois entra mapa / lista de cidades
+  const container = document.getElementById("lista-cidades");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  cidadesMock.forEach((cidade) => {
+    const card = document.createElement("div");
+    card.classList.add("cidade-card");
+
+    card.innerHTML = `
+      <h3>${cidade.nome} - ${cidade.estado}</h3>
+      <p>${cidade.descricao}</p>
+      <button data-id="${cidade.id}">Ver mais</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => {
+      selecionarCidade(cidade);
+    });
+
+    container.appendChild(card);
+  });
 }
 
 /* ======================

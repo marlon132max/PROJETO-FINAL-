@@ -187,6 +187,16 @@ function initCidade() {
   });
 }
 
+function selecionarCidade(cidade) {
+  // Salva cidade selecionada (simulação)
+  localStorage.setItem("cidadeSelecionada", JSON.stringify(cidade));
+
+  alert(`Cidade selecionada: ${cidade.nome}`);
+
+  // Futuro: redirecionar para detalhes ou roteiro
+  // window.location.href = "roteiro.html";
+}
+
 /* ======================
    ROTEIRO.HTML
 ====================== */
@@ -194,7 +204,62 @@ function initCidade() {
 function initRoteiro() {
   if (!protegerPagina()) return;
 
-  console.log("Página de roteiro carregada");
+  const form = document.getElementById("roteiro-form");
+  const tituloInput = document.getElementById("titulo-roteiro");
+  const lista = document.getElementById("lista-roteiro");
+
+  if (!form || !lista) return;
+
+  // Recupera cidade selecionada (vinda da página cidades)
+  const cidadeSelecionada = JSON.parse(
+    localStorage.getItem("cidadeSelecionada")
+  );
+
+  let cidadesRoteiro = [];
+
+  if (cidadeSelecionada) {
+    cidadesRoteiro.push(cidadeSelecionada);
+  }
+
+  renderizarRoteiro(lista, cidadesRoteiro);
+
+  // Salvar roteiro
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const titulo = tituloInput.value.trim();
+
+    if (!titulo) {
+      alert("Informe o título do roteiro.");
+      return;
+    }
+
+    if (cidadesRoteiro.length === 0) {
+      alert("Adicione pelo menos uma cidade ao roteiro.");
+      return;
+    }
+
+    const roteiro = {
+      titulo,
+      cidades: cidadesRoteiro,
+      usuario: localStorage.getItem("emailUsuario")
+    };
+
+    localStorage.setItem("roteiroCriado", JSON.stringify(roteiro));
+
+    alert("Roteiro criado com sucesso!");
+    tituloInput.value = "";
+  });
+}
+
+function renderizarRoteiro(lista, cidades) {
+  lista.innerHTML = "";
+
+  cidades.forEach((cidade, index) => {
+    const item = document.createElement("li");
+    item.textContent = `${index + 1}. ${cidade.nome} - ${cidade.estado}`;
+    lista.appendChild(item);
+  });
 }
 
 /* ======================

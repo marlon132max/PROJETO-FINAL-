@@ -1,39 +1,19 @@
-import express from "express";
+import { Router } from "express";
 import { supabase } from "../db/supabaseClient.js";
 
-const router = express.Router();
+const router = Router();
 
-// GET /api/roteiros/:cidadeId
-router.get("/:cidadeId", async (req, res) => {
-  const { cidadeId } = req.params;
-
-  // 1️⃣ Busca os vínculos
-  const { data: itens, error: erroItens } = await supabase
-    .from("roteiro_item")
-    .select("roteiro_id")
-    .eq("cidade_id", cidadeId);
-
-  if (erroItens) {
-    return res.status(500).json({ error: erroItens.message });
-  }
-
-  if (!itens || itens.length === 0) {
-    return res.json([]);
-  }
-
-  const roteiroIds = itens.map(item => item.roteiro_id);
-
-  // 2️⃣ Busca os roteiros (NOME CORRETO DA TABELA)
-  const { data: roteiros, error: erroRoteiros } = await supabase
-    .from("roteiro")   
+router.get("/", async (req, res) => {
+  const { data, error } = await supabase
+    .from("roteiro")
     .select("*")
-    .in("id", roteiroIds);
+    .order("id");
 
-  if (erroRoteiros) {
-    return res.status(500).json({ error: erroRoteiros.message });
+  if (error) {
+    return res.status(500).json({ error: error.message });
   }
 
-  res.json(roteiros);
+  res.json(data);
 });
 
 export default router;

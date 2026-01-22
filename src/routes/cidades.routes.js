@@ -1,30 +1,19 @@
-import { Router } from 'express';
-import { supabase } from '../db/supabaseClient.js';
+import { Router } from "express";
+import { supabase } from "../db/supabaseClient.js";
 
 const router = Router();
 
-// GET /api/cidades
-router.get('/cidades', async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from('cidade')
-      .select('*')
-      .order('nome');
+router.get("/", async (req, res) => {
+  const { data, error } = await supabase
+    .from("cidade")
+    .select("*")
+    .order("id");
 
-    if (error) {
-      return res.status(500).json({
-        erro: 'Erro ao buscar cidades',
-        detalhes: error.message
-      });
-    }
-
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({
-      erro: 'Erro inesperado no servidor',
-      detalhes: err.message
-    });
+  if (error) {
+    return res.status(500).json({ error: error.message });
   }
+
+  res.json(data);
 });
 
 export default router;

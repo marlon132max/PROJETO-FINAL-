@@ -131,7 +131,8 @@ async function initRoteiro() {
   document.getElementById("titulo-roteiro").innerText = `Roteiros em ${cidade.nome}`;
 
   try {
-    const res = await fetch(`${API_URL}/api/roteiros/${cidade.id}`);
+    // ✅ AGORA COMPATÍVEL COM O BACKEND
+    const res = await fetch(`${API_URL}/api/roteiros`);
     if (!res.ok) throw new Error("HTTP " + res.status);
 
     const roteiros = await res.json();

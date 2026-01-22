@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router } from "express";
 
 const router = Router();
 
-router.get('/status', (req, res) => {
+router.get("/", (req, res) => {
   res.json({
-    status: 'OK',
-    message: 'Backend Histomap funcionando'
+    status: "OK",
+    message: "Backend Histomap funcionando"
   });
 });
 

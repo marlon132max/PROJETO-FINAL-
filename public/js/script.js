@@ -1,8 +1,7 @@
-// js/script.js
-
-// URL do backend no Render
+// ================= CONFIG =================
 const API_URL = "https://histomap-backend.onrender.com";
 
+// ================= INIT =================
 document.addEventListener("DOMContentLoaded", () => {
   atualizarMenu();
 
@@ -29,44 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
       break;
   }
 });
-document.addEventListener("DOMContentLoaded", () => {
 
-  // Identifica a página atual
-  const page = document.body.id;
-
-  // Executa funções conforme a página
-  switch (page) {
-    case "page-index":
-      initIndex();
-      break;
-
-    case "page-login":
-      initLogin();
-      break;
-
-    case "page-cadastro":
-      initCadastro();
-      break;
-
-    case "page-cidade":
-      initCidade();
-      break;
-
-    case "page-roteiro":
-      initRoteiro();
-      break;
-
-    case "page-perfil":
-      initPerfil();
-      break;
-  }
-});
-
-/* ======================
-   FUNÇÕES GLOBAIS
-====================== */
-
-// Simulação de login
+// ================= LOGIN SIMULADO =================
 function usuarioLogado() {
   return localStorage.getItem("usuarioLogado") === "true";
 }
@@ -76,25 +39,10 @@ function logout() {
   window.location.href = "index.html";
 }
 
-/* ======================
-   INDEX.HTML
-====================== */
-
+// ================= INDEX =================
 function initIndex() {
   const btnExplorar = document.querySelector(".btn-primary");
   const btnCriarRoteiro = document.querySelector(".btn-secondary");
-  const menu = document.querySelector(".menu");
-
-  if (usuarioLogado()) {
-    menu.innerHTML = `
-      <a href="index.html">Início</a>
-      <a href="cidade.html">Cidades</a>
-      <a href="roteiro.html">Roteiro</a>
-      <a href="#" id="logout">Sair</a>
-    `;
-
-    document.getElementById("logout").addEventListener("click", logout);
-  }
 
   btnExplorar?.addEventListener("click", () => {
     window.location.href = "cidade.html";
@@ -102,80 +50,47 @@ function initIndex() {
 
   btnCriarRoteiro?.addEventListener("click", () => {
     if (!usuarioLogado()) {
-      alert("Faça login para criar um roteiro.");
-      window.location.href = "login.html";
-      return;
+      alert("Faça login primeiro");
+      return (window.location.href = "login.html");
     }
     window.location.href = "roteiro.html";
   });
 }
 
-/* ======================
-   LOGIN.HTML
-====================== */
-
+// ================= LOGIN =================
 function initLogin() {
   const form = document.querySelector("form");
+  if (!form) return;
 
-  form?.addEventListener("submit", (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     localStorage.setItem("usuarioLogado", "true");
     window.location.href = "index.html";
   });
 }
 
-/* ======================
-   CADASTRO.HTML
-====================== */
-
-
+// ================= CADASTRO =================
 function initCadastro() {
   const form = document.getElementById("cadastro-form");
   if (!form) return;
 
-  const nomeInput = document.getElementById("nome");
-  const emailInput = document.getElementById("email");
-  const senhaInput = document.getElementById("senha");
-
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    const nome = nomeInput.value.trim();
-    const email = emailInput.value.trim();
-    const senha = senhaInput.value.trim();
-
-    if (!nome || !email || !senha) {
-      alert("Preencha todos os campos.");
-      return;
-    }
-
-    // Simula cadastro
-    const usuario = {
-      nome,
-      email,
-      senha // ⚠️ apenas simulação (não fazer isso em produção)
-    };
-
-    localStorage.setItem("usuarioCadastrado", JSON.stringify(usuario));
-
-    alert("Cadastro realizado com sucesso! Faça login.");
+    alert("Cadastro simulado!");
     window.location.href = "login.html";
   });
 }
 
-/* ======================
-   CIDADE.HTML
-====================== */
-
+// ================= CIDADES =================
 async function initCidade() {
   const container = document.getElementById("lista-cidades");
   if (!container) return;
 
-  container.innerHTML = "<p>Carregando cidades...</p>";
+  container.innerHTML = "Carregando cidades...";
 
   try {
-    const response = await fetch("https://histomap-backend.onrender.com/api/cidades");
-    const cidades = await response.json();
+    const res = await fetch(`${API_URL}/api/cidades`);
+    const cidades = await res.json();
 
     container.innerHTML = "";
 
@@ -185,116 +100,69 @@ async function initCidade() {
 
       card.innerHTML = `
         <h3>${cidade.nome} - ${cidade.estado}</h3>
-        <p>Caminho: ${cidade.caminho}</p>
-        <button>Ver mais</button>
+        <button>Selecionar</button>
       `;
 
-     card.querySelector("button").addEventListener("click", () => {
-  localStorage.setItem("cidadeSelecionada", JSON.stringify(cidade));
-  window.location.href = "roteiro.html";
-});
-
+      card.querySelector("button").onclick = () => {
+        localStorage.setItem("cidadeSelecionada", JSON.stringify(cidade));
+        window.location.href = "roteiro.html";
+      };
 
       container.appendChild(card);
     });
-
-  } catch (error) {
-    container.innerHTML = "<p>Erro ao carregar cidades.</p>";
-    console.error(error);
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "Erro ao carregar cidades.";
   }
 }
 
-function selecionarCidade(cidade) {
-  // Salva cidade selecionada (simulação)
-  localStorage.setItem("cidadeSelecionada", JSON.stringify(cidade));
-
-  alert(`Cidade selecionada: ${cidade.nome}`);
-
-  // Futuro: redirecionar para detalhes ou roteiro
-  // window.location.href = "roteiro.html";
-}
-
-/* ======================
-   ROTEIRO.HTML
-====================== */
-
+// ================= ROTEIROS =================
 async function initRoteiro() {
   const container = document.getElementById("lista-roteiros");
   if (!container) return;
 
   const cidade = JSON.parse(localStorage.getItem("cidadeSelecionada"));
-  if (!cidade || !cidade.id) {
-    container.innerHTML = "<p>Cidade não encontrada.</p>";
+
+  if (!cidade) {
+    container.innerHTML = "Selecione uma cidade primeiro.";
     return;
   }
 
-  document.getElementById("titulo-roteiro").innerText =
-    `Roteiros em ${cidade.nome}`;
+  document.getElementById("titulo-roteiro").innerText = `Roteiros em ${cidade.nome}`;
 
   try {
-    const response = await fetch(
-      `https://histomap-backend.onrender.com/api/roteiros/${cidade.id}`
-    );
+    const res = await fetch(`${API_URL}/api/roteiros/${cidade.id}`);
+    if (!res.ok) throw new Error("HTTP " + res.status);
 
-    if (!response.ok) {
-      throw new Error("Erro HTTP " + response.status);
-    }
-
-    const roteiros = await response.json();
+    const roteiros = await res.json();
     container.innerHTML = "";
 
-    if (roteiros.length === 0) {
-      container.innerHTML = "<p>Nenhum roteiro disponível.</p>";
+    if (!roteiros.length) {
+      container.innerHTML = "Nenhum roteiro encontrado.";
       return;
     }
 
-    roteiros.forEach((roteiro) => {
-      const card = document.createElement("div");
-      card.classList.add("roteiro-card");
-
-      card.innerHTML = `<h3>${roteiro.titulo}</h3>`;
-      container.appendChild(card);
+    roteiros.forEach((r) => {
+      const div = document.createElement("div");
+      div.classList.add("roteiro-card");
+      div.innerHTML = `<h3>${r.titulo}</h3>`;
+      container.appendChild(div);
     });
-
-  } catch (error) {
-    console.error(error);
-    container.innerHTML = "<p>Erro ao carregar roteiros.</p>";
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "Erro ao carregar roteiros.";
   }
 }
 
-function renderizarRoteiro(lista, cidades) {
-  lista.innerHTML = "";
-
-  cidades.forEach((cidade, index) => {
-    const item = document.createElement("li");
-    item.textContent = `${index + 1}. ${cidade.nome} - ${cidade.estado}`;
-    lista.appendChild(item);
-  });
-}
-
-/* ======================
-   PERFIL.HTML
-====================== */
-
+// ================= PERFIL =================
 function initPerfil() {
-  if (!protegerPagina()) return;
-
-  const nomeUsuario = document.getElementById("nome-usuario");
-  const btnLogout = document.getElementById("btn-logout");
-
-  const email = localStorage.getItem("emailUsuario");
-
-  nomeUsuario.textContent = email
-    ? `Usuário: ${email}`
-    : "Usuário autenticado";
-
-  btnLogout.addEventListener("click", logout);
+  if (!usuarioLogado()) {
+    alert("Faça login");
+    return (window.location.href = "login.html");
+  }
 }
 
-/* ======================
-   ATUALIZA MENU
-====================== */
-
+// ================= MENU =================
 function atualizarMenu() {
   const menu = document.querySelector(".menu");
   if (!menu) return;
@@ -303,15 +171,11 @@ function atualizarMenu() {
     menu.innerHTML = `
       <a href="index.html">Início</a>
       <a href="cidade.html">Cidades</a>
-      <a href="roteiro.html">Roteiro</a>
+      <a href="roteiro.html">Roteiros</a>
       <a href="perfil.html">Perfil</a>
       <a href="#" id="logout">Sair</a>
     `;
-
-    document
-      .getElementById("logout")
-      .addEventListener("click", logout);
-
+    document.getElementById("logout").onclick = logout;
   } else {
     menu.innerHTML = `
       <a href="index.html">Início</a>
@@ -319,21 +183,3 @@ function atualizarMenu() {
     `;
   }
 }
-
-/* ======================
-   PROTEGER PAGINA
-====================== */
-
-function protegerPagina() {
-  if (!usuarioLogado()) {
-    alert("Você precisa estar logado para acessar esta página.");
-    window.location.href = "login.html";
-    return false;
-  }
-  return true;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.body.id === "page-cidade") initCidade();
-  if (document.body.id === "page-roteiro") initRoteiro();
-});

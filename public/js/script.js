@@ -1,4 +1,3 @@
-// ================= CONFIG =================
 const API_URL = "https://histomap-backend.onrender.com";
 
 // ================= INIT =================
@@ -8,14 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.id;
 
   switch (page) {
-    case "page-index":
-      initIndex();
-      break;
     case "page-login":
       initLogin();
       break;
     case "page-cadastro":
       initCadastro();
+      break;
+    case "page-perfil":
+      initPerfil();
       break;
     case "page-cidade":
       initCidade();
@@ -23,144 +22,91 @@ document.addEventListener("DOMContentLoaded", () => {
     case "page-roteiro":
       initRoteiro();
       break;
-    case "page-perfil":
-      initPerfil();
-      break;
   }
 });
 
-// ================= LOGIN SIMULADO =================
-function usuarioLogado() {
-  return localStorage.getItem("usuarioLogado") === "true";
+// ================= AUTH =================
+function getUsuario() {
+  return JSON.parse(localStorage.getItem("usuario"));
 }
 
 function logout() {
-  localStorage.removeItem("usuarioLogado");
+  localStorage.removeItem("usuario");
   window.location.href = "index.html";
-}
-
-// ================= INDEX =================
-function initIndex() {
-  const btnExplorar = document.querySelector(".btn-primary");
-  const btnCriarRoteiro = document.querySelector(".btn-secondary");
-
-  btnExplorar?.addEventListener("click", () => {
-    window.location.href = "cidade.html";
-  });
-
-  btnCriarRoteiro?.addEventListener("click", () => {
-    if (!usuarioLogado()) {
-      alert("Faça login primeiro");
-      return (window.location.href = "login.html");
-    }
-    window.location.href = "roteiro.html";
-  });
 }
 
 // ================= LOGIN =================
 function initLogin() {
   const form = document.querySelector("form");
-  if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    localStorage.setItem("usuarioLogado", "true");
+
+    const email = form.querySelector("input[type=email]").value;
+    const senha = form.querySelector("input[type=password]").value;
+
+    const res = await fetch(`${API_URL}/api/usuario/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error);
+      return;
+    }
+
+    localStorage.setItem("usuario", JSON.stringify(data));
     window.location.href = "index.html";
   });
 }
 
 // ================= CADASTRO =================
 function initCadastro() {
-  const form = document.getElementById("cadastro-form");
-  if (!form) return;
+  const form = document.querySelector("form");
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert("Cadastro simulado!");
+
+    const nome = form.querySelector("input[type=text]").value;
+    const email = form.querySelector("input[type=email]").value;
+    const senha = form.querySelector("input[type=password]").value;
+
+    const res = await fetch(`${API_URL}/api/usuario/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, email, senha }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error);
+      return;
+    }
+
+    alert("Cadastro realizado com sucesso!");
     window.location.href = "login.html";
   });
 }
 
-// ================= CIDADES =================
-async function initCidade() {
-  const container = document.getElementById("lista-cidades");
-  if (!container) return;
-
-  container.innerHTML = "Carregando cidades...";
-
-  try {
-    const res = await fetch(`${API_URL}/api/cidades`);
-    const cidades = await res.json();
-
-    container.innerHTML = "";
-
-    cidades.forEach((cidade) => {
-      const card = document.createElement("div");
-      card.classList.add("cidade-card");
-
-      card.innerHTML = `
-        <h3>${cidade.nome} - ${cidade.estado}</h3>
-        <button>Selecionar</button>
-      `;
-
-      card.querySelector("button").onclick = () => {
-        localStorage.setItem("cidadeSelecionada", JSON.stringify(cidade));
-        window.location.href = "roteiro.html";
-      };
-
-      container.appendChild(card);
-    });
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = "Erro ao carregar cidades.";
-  }
-}
-
-// ================= ROTEIROS =================
-async function initRoteiro() {
-  const container = document.getElementById("lista-roteiros");
-  if (!container) return;
-
-  const cidade = JSON.parse(localStorage.getItem("cidadeSelecionada"));
-
-  if (!cidade) {
-    container.innerHTML = "Selecione uma cidade primeiro.";
-    return;
-  }
-
-  document.getElementById("titulo-roteiro").innerText = `Roteiros em ${cidade.nome}`;
-
-  try {
-    // ✅ AGORA COMPATÍVEL COM O BACKEND
-    const res = await fetch(`${API_URL}/api/roteiros`);
-    if (!res.ok) throw new Error("HTTP " + res.status);
-
-    const roteiros = await res.json();
-    container.innerHTML = "";
-
-    if (!roteiros.length) {
-      container.innerHTML = "Nenhum roteiro encontrado.";
-      return;
-    }
-
-    roteiros.forEach((r) => {
-      const div = document.createElement("div");
-      div.classList.add("roteiro-card");
-      div.innerHTML = `<h3>${r.titulo}</h3>`;
-      container.appendChild(div);
-    });
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = "Erro ao carregar roteiros.";
-  }
-}
-
 // ================= PERFIL =================
-function initPerfil() {
-  if (!usuarioLogado()) {
+async function initPerfil() {
+  const usuario = getUsuario();
+
+  if (!usuario) {
     alert("Faça login");
     return (window.location.href = "login.html");
   }
+
+  const res = await fetch(`${API_URL}/api/usuario/${usuario.id}`);
+  const data = await res.json();
+
+  document.getElementById("nome-usuario").innerText = data.nome;
+
+  document.getElementById("btn-logout").onclick = logout;
 }
 
 // ================= MENU =================
@@ -168,7 +114,9 @@ function atualizarMenu() {
   const menu = document.querySelector(".menu");
   if (!menu) return;
 
-  if (usuarioLogado()) {
+  const usuario = getUsuario();
+
+  if (usuario) {
     menu.innerHTML = `
       <a href="index.html">Início</a>
       <a href="cidade.html">Cidades</a>
@@ -184,4 +132,3 @@ function atualizarMenu() {
     `;
   }
 }
-

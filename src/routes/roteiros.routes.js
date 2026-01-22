@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/:cidadeId", async (req, res) => {
   const { cidadeId } = req.params;
 
-  // 1️⃣ Buscar os roteiro_id ligados à cidade
+  // 1️⃣ Busca os vínculos
   const { data: itens, error: erroItens } = await supabase
     .from("roteiro_item")
     .select("roteiro_id")
@@ -23,9 +23,9 @@ router.get("/:cidadeId", async (req, res) => {
 
   const roteiroIds = itens.map(item => item.roteiro_id);
 
-  // 2️⃣ Buscar os roteiros
+  // 2️⃣ Busca os roteiros (NOME CORRETO DA TABELA)
   const { data: roteiros, error: erroRoteiros } = await supabase
-    .from("roteiros")
+    .from("roteiro")   
     .select("*")
     .in("id", roteiroIds);
 

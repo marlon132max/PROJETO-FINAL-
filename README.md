@@ -1,2 +1,2 @@
 # PROJETO-FINAL-
-https://render.com/register
+https://histomap-backend.onrender.com/api/status

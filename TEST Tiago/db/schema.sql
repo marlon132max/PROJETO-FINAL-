@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS cidade (
+  id SERIAL PRIMARY KEY,
+  nome TEXT NOT NULL,
+  estado TEXT,
+  descricao TEXT
+);
+
+CREATE TABLE IF NOT EXISTS roteiro (
+  id SERIAL PRIMARY KEY,
+  titulo TEXT NOT NULL
+);

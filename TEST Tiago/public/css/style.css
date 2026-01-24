@@ -149,52 +149,6 @@
   }
   
 
-  /* CSS BASICO DO RESTO */
-
-  body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-}
-
-header {
-    margin-bottom: 40px;
-}
-
-.container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.btn, button {
-    padding: 10px 20px;
-    background: #8b5e3c;
-    color: white;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    
-}
-
-input, select {
-    display: block;
-    margin: 10px auto;
-    padding: 8px;
-    width: 250px;
-}
-
-.lista {
-    list-style: none;
-    padding: 0;
-}
-
-.lista li {
-    margin: 10px 0;
-}
-
 
 /*  PERFIL */
 .btn-perfil {
@@ -219,4 +173,160 @@ input, select {
 .btn-perfil svg {
   width: 28px;
   height: 28px;
+}
+
+/* =================================
+   ESTILO DO BODY (PÁGINA DE LOGIN)
+   ================================= */
+body#page-login {
+    min-height: 100vh;       /* Ocupa no mínimo 100% da altura da tela */
+    background: linear-gradient(
+        135deg,
+        var(--cor-secundaria),
+        var(--cor-primaria)
+    );                        /* Fundo em degradê usando as cores do sistema */
+
+    display: flex;           /* Usa Flexbox */
+    align-items: center;     /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+/* =========================
+   CONTAINER PRINCIPAL
+   ========================= */
+.login-container {
+    width: 100%;             /* Ocupa 100% da largura disponível */
+    max-width: 420px;        /* Limita largura máxima (layout controlado) */
+    padding: 20px;           /* Espaçamento interno */
+}
+
+/* =========================
+   CARD DE LOGIN
+   ========================= */
+.login-card {
+    background-color: var(--cor-clara); /* Fundo claro do card */
+    border-radius: 14px;     /* Bordas arredondadas */
+    padding: 35px 30px;      /* Espaçamento interno */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25); /* Sombra para efeito de elevação */
+    text-align: center;      /* Centraliza textos */
+}
+
+/* =========================
+   LOGO / TÍTULO
+   ========================= */
+.logo h1 {
+    font-size: 32px;                 /* Tamanho do título */
+    color: var(--cor-primaria);      /* Cor marrom histórico */
+}
+
+.logo span {
+    color: var(--cor-secundaria);    /* Destaque em verde estrada */
+}
+
+.logo p {
+    font-size: 13px;                 /* Texto menor */
+    color: #555;                     /* Cinza suave */
+    margin-bottom: 25px;             /* Espaço abaixo */
+}
+
+/* =========================
+   TÍTULO "LOGIN"
+   ========================= */
+.login-card h2 {
+    margin-bottom: 20px;     /* Espaçamento inferior */
+    color: var(--cor-escura);/* Texto escuro */
+}
+
+/* =========================
+   GRUPO DE INPUTS
+   ========================= */
+.input-group {
+    display: flex;                   /* Alinha ícone e input lado a lado */
+    align-items: center;             /* Centraliza verticalmente */
+    background-color: #e8e4de;       /* Fundo levemente cinza */
+    border-radius: 8px;              /* Bordas arredondadas */
+    padding: 12px;                   /* Espaçamento interno */
+    margin-bottom: 15px;             /* Espaço entre campos */
+    border: 1px solid transparent;   /* Borda invisível */
+    transition: 0.3s;                /* Animação suave */
+}
+
+/* Ícone dentro do input */
+.input-group i {
+    margin-right: 10px;              /* Espaço entre ícone e campo */
+    color: var(--cor-primaria);      /* Cor do ícone */
+}
+
+/* Campo de texto */
+.input-group input {
+    border: none;                    /* Remove borda padrão */
+    background: none;                /* Remove fundo padrão */
+    outline: none;                   /* Remove contorno ao focar */
+    width: 100%;                     /* Ocupa todo espaço disponível */
+    font-size: 15px;                 /* Tamanho do texto */
+    color: var(--cor-escura);        /* Cor do texto */
+}
+
+/* =========================
+   EFEITO AO FOCAR NO INPUT
+   ========================= */
+.input-group:focus-within {
+    border-color: var(--cor-secundaria); /* Borda verde ao focar */
+    background-color: #fff;              /* Fundo branco */
+}
+
+/* =========================
+   BOTÃO DE LOGIN
+   ========================= */
+button {
+    width: 100%;                    /* Botão ocupa toda largura */
+    padding: 13px;                  /* Altura confortável */
+    border: none;                   /* Remove borda */
+    border-radius: 8px;             /* Bordas arredondadas */
+    background-color: var(--cor-secundaria); /* Verde estrada */
+    color: var(--cor-clara);        /* Texto claro */
+    font-size: 16px;                /* Tamanho do texto */
+    cursor: pointer;                /* Cursor de botão */
+    transition: 0.3s;               /* Animação suave */
+    margin-top: 5px;                /* Espaço acima */
+}
+
+/* Hover no botão */
+button:hover {
+    background-color: #254b41;      /* Verde mais escuro */
+}
+
+/* =========================
+   LINKS (ESQUECI SENHA / CADASTRO)
+   ========================= */
+.links {
+    margin-top: 18px;               /* Espaço acima */
+    display: flex;                  /* Layout flexível */
+    justify-content: space-between; /* Um link em cada lado */
+}
+
+.links a {
+    font-size: 13px;                /* Texto pequeno */
+    text-decoration: none;          /* Remove sublinhado */
+    color: var(--cor-primaria);     /* Cor marrom */
+    transition: 0.2s;               /* Animação suave */
+}
+
+/* Hover nos links */
+.links a:hover {
+    text-decoration: underline;     /* Sublinha ao passar o mouse */
+    color: var(--cor-secundaria);   /* Muda para verde */
+}
+
+/* =========================
+   RESPONSIVIDADE
+   ========================= */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 25px 20px;         /* Menos espaço em telas pequenas */
+    }
+
+    .logo h1 {
+        font-size: 28px;            /* Título menor no mobile */
+    }
 }

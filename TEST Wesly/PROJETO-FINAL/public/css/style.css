@@ -1,0 +1,218 @@
+/* ================= RESET ================= */
+/* Seleciona TODOS os elementos da página */
+* {
+    margin: 0;                 /* Remove margens padrão do navegador */
+    padding: 0;                /* Remove espaçamentos internos padrão */
+    box-sizing: border-box;    /* Faz largura/altura incluir padding e borda */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    /* Define a fonte padrão do site */
+}
+
+/* Estilo geral do corpo da página */
+body {
+    background-color: #f3efe9; /* Cor de fundo clara (bege) */
+    color: #3b2a1a;            /* Cor padrão do texto (marrom escuro) */
+}
+
+/* ================= HEADER ================= */
+/* Estilo do cabeçalho */
+header {
+    width: 100%;               /* Ocupa toda a largura da tela */
+    height: 80px;              /* Altura fixa do cabeçalho */
+    background-color: #5a3e2b; /* Cor marrom do cabeçalho */
+    display: flex;             /* Ativa o flexbox */
+    align-items: center;       /* Centraliza itens verticalmente */
+    justify-content: space-between; /* Logo à esquerda, menu à direita */
+    padding: 0 40px;           /* Espaço interno lateral */
+    position: sticky;          /* Cabeçalho fixo ao rolar a página */
+    top: 0;                    /* Fixa no topo da tela */
+    z-index: 100;              /* Garante que fique acima dos outros elementos */
+}
+
+/* Texto da logo */
+.logo h1 {
+    color: #ffffff;            /* Texto branco */
+    font-size: 24px;           /* Tamanho da fonte */
+    text-transform: uppercase;/* Texto em letras maiúsculas */
+    letter-spacing: 2px;       /* Espaçamento entre letras */
+}
+
+/* Container do menu */
+nav {
+    display: flex;             /* Links em linha */
+    gap: 25px;                 /* Espaço entre os links */
+}
+
+/* Estilo dos links do menu */
+nav a {
+    color: #ffffff;            /* Cor branca */
+    text-decoration: none;     /* Remove sublinhado */
+    font-size: 15px;           /* Tamanho da fonte */
+    font-weight: bold;         /* Texto em negrito */
+    transition: 0.3s;          /* Animação suave */
+}
+
+/* Efeito ao passar o mouse nos links */
+nav a:hover {
+    color: #d2b48c;            /* Cor bege clara */
+}
+
+/* ================= BANNER ================= */
+/* Área do banner principal */
+.banner {
+    position: relative;        /* Permite sobreposição de elementos */
+    width: 100%;               /* Largura total */
+    height: 450px;             /* Altura do banner */
+    display: flex;             /* Flexbox */
+    align-items: center;       /* Centraliza verticalmente */
+    justify-content: center;   /* Centraliza horizontalmente */
+    overflow: hidden;          /* Esconde excesso do vídeo */
+}
+
+/* Vídeo de fundo */
+.video-bg {
+    position: absolute;        /* Fica solto dentro do banner */
+    width: 100%;               /* Largura total */
+    height: 100%;              /* Altura total */
+    object-fit: cover;         /* Cobre toda a área sem distorcer */
+    z-index: -2;               /* Fica atrás de tudo */
+}
+
+/* Camada escura sobre o vídeo */
+.banner-overlay {
+    position: absolute;        /* Sobreposição */
+    inset: 0;                  /* Ocupa todo o banner */
+    background: rgba(0, 0, 0, 0.5); /* Escurece o vídeo */
+    z-index: -1;               /* Fica entre o vídeo e o texto */
+}
+
+/* Texto do banner */
+.banner-texto {
+    color: white;              /* Texto branco */
+    text-align: center;        /* Texto centralizado */
+}
+
+/* Título do banner */
+.banner-texto h2 {
+    font-size: 40px;           /* Fonte grande */
+    margin-bottom: 10px;       /* Espaço abaixo */
+}
+
+/* Botão do banner */
+.banner-texto button {
+    margin-top: 20px;          /* Espaço acima do botão */
+    padding: 12px 30px;        /* Tamanho interno */
+    border: none;              /* Remove borda */
+    border-radius: 25px;       /* Botão arredondado */
+    background-color: #d2b48c; /* Cor bege */
+    font-weight: bold;         /* Texto em negrito */
+    cursor: pointer;           /* Cursor de clique */
+    transition: 0.3s;          /* Animação suave */
+}
+
+/* Efeito hover do botão */
+.banner-texto button:hover {
+    background-color: #c19a6b; /* Bege mais escuro */
+    transform: scale(1.05);    /* Aumenta levemente */
+}
+
+/* ================= GRID DE CARDS ================= */
+/* Container geral dos cards */
+.cards-container {
+    max-width: 1200px;         /* Largura máxima */
+    margin: 40px auto;         /* Centraliza e cria espaço vertical */
+    padding: 0 20px;           /* Espaço interno lateral */
+}
+
+/* Grid dos cards */
+.cards-grid {
+    display: grid;             /* Ativa grid layout */
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 15px;                 /* Espaço entre os cards */
+}
+
+/* Card individual */
+.card-roteiro {
+    position: relative;        /* Permite overlay */
+    height: 280px;             /* Altura fixa do card */
+    background-color: #000;    /* Fundo preto de segurança */
+    overflow: hidden;          /* Esconde excesso da imagem */
+    cursor: pointer;           /* Cursor de clique */
+     border-radius: 50px;  /* 🔴 ARREDONDA O CARD */
+}
+
+/* Imagem do card */
+.card-roteiro img {
+    width: 100%;               /* Largura total */
+    height: 100%;              /* Altura total */
+    object-fit: cover;         /* Preenche sem distorcer */
+    opacity: 0.85;             /* Escurece levemente */
+    transition: transform 0.9s ease; /* Animação suave */
+}
+
+/* Zoom da imagem ao passar o mouse */
+.card-roteiro:hover img {
+    transform: scale(1.10);    /* Aumenta a imagem */
+}
+
+/* Overlay de texto do card */
+.card-overlay {
+    position: absolute;        /* Sobre a imagem */
+    inset: 0;                  /* Ocupa todo o card */
+    background: linear-gradient(
+        to top right,
+        rgba(0,0,0,0.8) 0%,
+        transparent 60%
+    );                          /* Gradiente para leitura */
+    display: flex;             /* Flexbox */
+    flex-direction: column;    /* Texto em coluna */
+    justify-content: flex-end; /* Texto embaixo */
+    padding: 25px;             /* Espaço interno */
+}
+
+/* Título do card */
+.card-overlay h3 {
+    color: #ffffff;            /* Texto branco */
+    font-size: 32px;           /* Fonte grande */
+    font-weight: 700;          /* Negrito forte */
+    margin-bottom: 5px;        /* Espaço abaixo */
+    line-height: 1.1;          /* Altura da linha */
+}
+
+/* Descrição do card */
+.card-overlay p {
+    color: #ffffff;            /* Texto branco */
+    font-size: 16px;           /* Tamanho médio */
+    opacity: 0.9;              /* Leve transparência */
+}
+
+/* ================= RODAPÉ ================= */
+
+/* Área principal do rodapé */
+footer {
+    width: 100%;                  /* Ocupa toda a largura da tela */
+    background-color: #5a3e2b;    /* Marrom igual ao cabeçalho */
+    color: #ffffff;               /* Texto branco */
+    padding: 30px 20px;           /* Espaçamento interno (top/bottom - lados) */
+    text-align: center;           /* Centraliza o texto */
+    margin-top: 60px;             /* Espaço entre os cards e o rodapé */
+}
+
+/* Texto do rodapé */
+footer p {
+    font-size: 14px;              /* Tamanho da fonte */
+    letter-spacing: 1px;          /* Espaçamento entre letras */
+    opacity: 0.9;                 /* Leve transparência */
+}
+
+/* Links do rodapé (se usar depois) */
+footer a {
+    color: #d2b48c;               /* Bege claro */
+    text-decoration: none;        /* Remove sublinhado */
+    font-weight: bold;            /* Texto em negrito */
+}
+
+/* Hover dos links */
+footer a:hover {
+    text-decoration: underline;  /* Sublinha ao passar o mouse */
+}
